@@ -1,0 +1,22 @@
+{
+  "name": "midnight-run",
+  "version": "1.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "esbuild src/game.js --bundle --minify --format=esm --outfile=dist/game.js",
+    "dev": "python3 -m http.server 4177 --bind 127.0.0.1 --directory dist",
+    "check": "node --check src/game.js && node --check src/tokyo-scene.js && node --check src/route.js && node --check src/collisions.js && node --check src/vehicles.js && node --check src/streetscape.js && node --check scripts/package-mac.mjs",
+    "test": "node tests/route.test.mjs && node tests/collisions.test.mjs",
+    "desktop": "npm run package:mac && open \"release/Midnight Run.app\"",
+    "package:mac": "npm run build && node scripts/package-mac.mjs"
+  },
+  "dependencies": {
+    "three": "0.170.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.5",
+    "playwright": "1.64.1"
+  },
+  "description": "Tokyo night racing for macOS and the web"
+}
