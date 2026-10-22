@@ -1,0 +1,20 @@
+import { cp, mkdir, rm, writeFile } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
+import path from 'node:path';
+
+if(process.platform!=='darwin')throw new Error('The native Mac app must be built on macOS with Xcode Command Line Tools.');
+const root=process.cwd(),arch=process.arch==='arm64'?'arm64':'x86_64';
+const app=path.join(root,'release/Midnight Run.app'),contents=path.join(app,'Contents');
+await rm(app,{recursive:true,force:true});
+await mkdir(path.join(contents,'MacOS'),{recursive:true});
+await mkdir(path.join(contents,'Resources'),{recursive:true});
+await cp('dist',path.join(contents,'Resources/web'),{recursive:true});
+await cp('desktop/icon.icns',path.join(contents,'Resources/icon.icns'));
+const cache=path.join(root,'release/swift-cache');await mkdir(cache,{recursive:true});
+execFileSync('xcrun',['swiftc','desktop/main.swift','-O','-swift-version','5','-target',`${arch}-apple-macosx13.0`,'-module-cache-path',cache,'-framework','AppKit','-framework','WebKit','-framework','Network','-o',path.join(contents,'MacOS/MidnightRun')],{stdio:'inherit'});
+await writeFile(path.join(contents,'Info.plist'),`<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"><plist version="1.0"><dict><key>CFBundleExecutable</key><string>MidnightRun</string><key>CFBundleIdentifier</key><string>studio.midnight-run.tokyo</string><key>CFBundleName</key><string>Midnight Run</string><key>CFBundleDisplayName</key><string>Midnight Run</string><key>CFBundlePackageType</key><string>APPL</string><key>CFBundleShortVersionString</key><string>1.1.0</string><key>CFBundleVersion</key><string>3</string><key>CFBundleIconFile</key><string>icon</string><key>LSMinimumSystemVersion</key><string>13.0</string><key>NSHighResolutionCapable</key><true/><key>NSSupportsAutomaticGraphicsSwitching</key><true/><key>NSAppTransportSecurity</key><dict><key>NSAllowsLocalNetworking</key><true/></dict></dict></plist>`);
+execFileSync('codesign',['--force','--sign','-',app],{stdio:'inherit'});
+execFileSync('codesign',['--verify','--deep','--strict',app],{stdio:'inherit'});
+const zip=path.join(root,`release/Midnight-Run-macOS-${process.arch}.zip`);
+execFileSync('ditto',['-c','-k','--sequesterRsrc','--keepParent',app,zip],{stdio:'inherit'});
+console.log(JSON.stringify({app,zip,engine:'macOS WebKit',signing:'local ad-hoc; not notarized'}));
