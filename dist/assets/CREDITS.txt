@@ -1,0 +1,31 @@
+MIDNIGHT RUN — asset credits
+
+Ferrari 458 Italia model by vicent091036
+Original: https://sketchfab.com/models/57bf6cc56931426e87494f554df1dab6
+Distribution: https://threejs.org/examples/webgl_materials_car.html
+Model asset: https://threejs.org/examples/models/gltf/ferrari.glb
+License: Creative Commons Attribution 4.0 (CC BY 4.0)
+https://creativecommons.org/licenses/by/4.0/
+Adaptations: metallic paint, glass and lighting materials; integrated into an arcade racing simulation.
+
+Three.js — MIT License. https://threejs.org/
+Draco decoder — Apache License 2.0. https://github.com/google/draco
+Barlow / Barlow Condensed — SIL Open Font License, Jeremy Tribby.
+
+Procedural city, road textures, rain, lighting, interface, game logic and synthesized audio created for this demo.
+This independent demo is not affiliated with Electronic Arts, Need for Speed, or Ferrari.
+
+Tokyo road network, route coordinates, park boundaries and building footprints
+© OpenStreetMap contributors — Open Database License 1.0 (ODbL).
+https://www.openstreetmap.org/copyright
+https://opendatacommons.org/licenses/odbl/1-0/
+Data snapshot: 2026-10-21. Derived data: tokyo-course.json and tokyo-blocks.json in this assets directory, distributed under ODbL 1.0.
+Junctions are rounded for arcade driving. Street width and flat elevation are approximations. Building heights without OSM tags are estimated. Storefronts, facade materials and pedestrians are original procedural artwork, not surveyed replicas.
+
+GT3-style and Revuelto-style vehicles: original procedural geometry created for this demo. They are visual interpretations, not manufacturer-supplied or exact licensed vehicle models.
+Design references: https://newsroom.porsche.com/en/press-kits/911-GT3/Aerodynamics-and-design.html
+https://www.lamborghini.com/en-en/models/revuelto-models/revuelto
+No Porsche or Lamborghini logos, badges, reference photographs or downloadable third-party meshes are included. No affiliation with these manufacturers.
+
+Barlow and Barlow Condensed font files are bundled for offline use. See fonts/OFL.txt.
+Mac application: original Swift/AppKit shell using the system WebKit engine. No Electron or bundled Chromium runtime.
