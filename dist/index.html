@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#080c12"><meta name="description" content="The city is yours. A cinematic, playable night-racing sprint with rain, rivals, drifting and nitrous.">
+  <title>MIDNIGHT RUN — Tokyo After Dark</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a1015'/%3E%3Cpath d='M20 15h10L18 49H8zm17 0h19L44 49H25z' fill='%23d7ff54'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="app">
+    <div id="world" aria-label="3D night racing scene"></div>
+    <div class="vignette"></div><div class="grain"></div><div id="speed-lines"></div>
+    <div id="loader"><div class="loader-logo">MIDNIGHT<span>RUN</span></div><div class="loading-track"><i></i></div><p>WAKING UP THE CITY</p></div>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Midnight Run home" id="home"><svg viewBox="0 0 39 33" aria-hidden="true"><path d="M12 1h7L8 32H1zM24 1h14L27 32H13z" fill="currentColor"/></svg><span>MIDNIGHT<b>RUN<span class="brand-dot">®</span></b></span></a>
+      <div class="session"><span class="live-dot"></span> FREE DRIVE <i></i> <span class="session-location">TOKYO</span><span class="session-weather">☂ &nbsp; 18°C</span></div>
+      <nav class="tools" aria-label="Game controls">
+        <button id="sound" title="Toggle sound (M)" aria-label="Enable sound" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4zM16 9l5 6m0-6-5 6"/></svg></button>
+        <button id="help" title="Controls (H)" aria-label="Show controls"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="3"/><path d="M7 10v4m-2-2h4m6-1h.1m3 3h.1"/></svg></button>
+        <button id="settings" title="Settings" aria-label="Open settings"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 17h16"/><circle cx="8" cy="7" r="2.5"/><circle cx="16" cy="17" r="2.5"/></svg></button>
+        <button id="fullscreen" title="Fullscreen (F)" aria-label="Toggle fullscreen"><svg viewBox="0 0 24 24"><path d="M8 4H4v4m12-4h4v4M4 16v4h4m12-4v4h-4"/></svg></button>
+      </nav>
+    </header>
+    <section class="intro" id="intro">
+      <div class="eyebrow"><span></span> 東京 AFTER HOURS / VOL. 03</div>
+      <h1>TOKYO.<br>AFTER <em>DARK.</em></h1>
+      <p class="intro-copy">Tokyo Tower. Shiba Park. Rain on the tarmac.<br>Race the real streets after the city slows down.</p>
+      <div class="event-info"><span class="event-mark">↗</span><div><div class="event-name">TOKYO MIDNIGHT</div><div class="event-meta">2.6 KM <b>·</b> 4 RACERS <b>·</b> WET ROADS</div></div></div>
+      <button id="start" class="primary"><span>START YOUR ENGINE</span><span class="button-arrow">↗</span></button>
+      <div class="enter-hint">PRESS <kbd>ENTER</kbd> TO RACE <span>OR</span> <button id="free-drive">EXPLORE THE CITY →</button></div>
+    </section>
+    <div class="hero-caption" id="hero-caption"><span class="tiny-label">YOUR RIDE</span><strong>911 <em>GT3 STYLE</em></strong><span class="car-spec"><i></i> ORIGINAL MESH / GT3-INSPIRED</span><div class="garage" aria-label="Choose your car"><button data-ride="ferrari" aria-pressed="true">458 ITALIA</button><button data-ride="gt3" aria-pressed="false">GT3 STYLE</button><button data-ride="revuelto" aria-pressed="false">REVUELTO STYLE</button></div></div>
+    <section class="race-hud" id="race-hud" aria-label="Race status" hidden>
+      <div class="position"><span class="tiny-label">POSITION</span><div><strong id="position">4</strong><span>/ 4</span></div></div>
+      <div class="race-timing"><span class="tiny-label">RACE TIME</span><strong id="timer">00:00.00</strong><span class="best-label">BEST <b id="best">--:--.--</b></span></div>
+      <div class="race-progress"><div><span id="race-name">TOKYO MIDNIGHT</span><span id="progress-label">0%</span></div><div class="progress-track"><i id="progress-bar"></i><span>⚑</span></div></div>
+      <button id="pause" class="pause-button" aria-label="Pause race" title="Pause (Esc)">Ⅱ</button>
+    </section>
+    <div id="route-cue" class="route-cue"><b>↑</b><span>OPEN ROAD<small>FIND YOUR LINE</small></span></div>
+    <div id="countdown" class="countdown" hidden></div>
+    <div id="announcement" class="announcement" aria-live="polite"></div>
+    <div class="bottom-left">
+      <div class="map-wrap"><canvas id="minimap" width="250" height="170" aria-label="Route minimap"></canvas><div class="map-label"><span class="live-dot"></span><span id="district">TOKYO TOWER ST.</span><span id="remaining">2.6 KM</span></div></div>
+      <div class="environment"><span class="env-dot"></span> TOKYO <span>23:48</span><i></i><span>LIGHT RAIN</span></div>
+    </div>
+    <div class="tachometer" id="tachometer">
+      <svg class="tach-ring" viewBox="0 0 240 180" aria-hidden="true"><path class="tach-bg" d="M35 151A99 99 0 1 1 205 151"/><path id="rpm-arc" class="tach-fill" d="M35 151A99 99 0 1 1 205 151" pathLength="100"/><path class="tach-red" d="M212 84A99 99 0 0 1 205 151"/><g class="tach-ticks"><path d="M27 119h8M31 75l8 3M58 38l6 6M98 18l2 9M142 18l-2 9M182 38l-6 6M209 75l-8 3"/></g></svg>
+      <div class="speed"><span id="speed">000</span><small>KM/H</small></div><div class="gear"><span id="gear">N</span><small>GEAR</small></div>
+      <div class="nitrous"><div class="nitrous-label"><span><svg viewBox="0 0 12 16"><path d="m7 0-6 9h4l-1 7 7-10H7z" fill="currentColor"/></svg> NITROUS</span><kbd>SHIFT</kbd></div><div class="nitro-track"><i id="nitro-bar"></i></div></div>
+    </div>
+    <footer class="bottom-bar"><span class="build-label"><i></i> TOKYO STREET EDITION <a href="assets/CREDITS.txt" target="_blank" rel="noopener" title="Model credits · © OpenStreetMap contributors, ODbL">CREDITS / © OSM ↗</a></span><div class="keyboard-hints"><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> DRIVE</span><span><kbd>SPACE</kbd> DRIFT</span><span><kbd>C</kbd> CAMERA</span><span><kbd>ESC</kbd> PAUSE</span></div><span class="quality-label">WEBGL <i>●</i> <span id="fps">60</span> FPS</span></footer>
+    <div class="touch-controls" id="touch-controls"><div><button data-key="KeyA" aria-label="Steer left">◀</button><button data-key="KeyD" aria-label="Steer right">▶</button></div><div><button data-key="ShiftLeft" class="touch-nitro" aria-label="Nitrous">ϟ</button><button data-key="Space" aria-label="Drift">DRIFT</button><button data-key="KeyS" aria-label="Brake">BRAKE</button><button data-key="KeyW" class="touch-gas" aria-label="Accelerate">GAS</button></div></div>
+    <div class="modal-backdrop" id="modal" hidden>
+      <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button class="modal-close" id="modal-close" aria-label="Close dialog">×</button><div class="eyebrow" id="modal-eyebrow">TAKE A BREATHER</div><h2 id="modal-title">PAUSED.</h2><div id="modal-content"></div><div id="modal-actions"></div></section>
+    </div>
+    <div id="error" hidden><h2>Your starting line is almost ready.</h2><p>This scene needs WebGL. Enable hardware acceleration in your browser and reload.</p><button onclick="location.reload()">TRY AGAIN</button></div>
+  </main>
+  <script type="module" src="game.js"></script>
+</body>
+</html>
